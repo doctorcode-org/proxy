@@ -1,0 +1,58 @@
+﻿<ctl:BaseWindow x:Class="DoctorProxy.WinCertMaker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctl="clr-namespace:DoctorProxy.Control"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        Style="{StaticResource baseWindowStyle}"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Title="گواهی SSL" 
+        Width="500" 
+        SizeToContent="Height">
+
+
+    <StackPanel Name="spNewCa">
+        <Border Grid.Row="0" FlowDirection="RightToLeft" Padding="0 10" Margin="15" BorderThickness="0,0,0,1" BorderBrush="#FFA0A0A0">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="48" VerticalAlignment="Top" Source="pack://application:,,,/Resources/cert.png"/>
+                <TextBlock Width="400" TextWrapping="Wrap" TextAlignment="Justify" Text="{DynamicResource MakeCertNote}" Margin="15,0,0,0"></TextBlock>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="10">
+            <ctl:ServiceSelector Style="{StaticResource LtrServiceSelector}" LabelText="Common Name (CN):" Value="{Binding CommonName,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource LtrServiceSelector}" LabelText="Organization (O):" Value="{Binding Organization,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource LtrServiceSelector}" LabelText="Organization Unit (OU):" Value="{Binding OrganizationUnit,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource LtrServiceSelector}" LabelText="Country (C):" Value="{Binding Country,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource LtrServiceSelector}" LabelText="State (S):" Value="{Binding State,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource LtrServiceSelector}" LabelText="Locale (L):" Value="{Binding Locale,Mode=TwoWay}" />
+        </StackPanel>
+
+        <Border Grid.Row="2" Padding="0 10" Margin="15" BorderThickness="0,1" BorderBrush="#FFA0A0A0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ctl:ServiceSelector Grid.Column="0" LabelWidth="100" NumericTextBox="True" Style="{StaticResource RtlServiceSelector}" LabelText="مدت اعتبار (روز):" Value="{Binding ExpireDays,Mode=TwoWay}" />
+                <ctl:ServiceSelector Grid.Column="2" LabelWidth="100" NumericTextBox="True" Style="{StaticResource RtlServiceSelector}" LabelText="طول کلید (بیت):" Value="{Binding KeyLenght,Mode=TwoWay}" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="3" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="btnMakeCert" HorizontalAlignment="Left" Grid.Column="2" Width="100" Style="{StaticResource btnServiceStyle}" Click="btnMakeCert_Click">تایید</Button>
+            
+            <Button Name="btnExit" IsCancel="True" HorizontalAlignment="Right" Grid.Column="0" Width="100" Style="{StaticResource btnServiceStyle}" Content="بازگشت"/>
+        </Grid>
+    </StackPanel>
+
+
+</ctl:BaseWindow>

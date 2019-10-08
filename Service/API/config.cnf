@@ -1,0 +1,73 @@
+dir = .
+
+[ca] 
+default_ca = CA_default
+
+[ CA_default ]
+database = keys/index
+serial = keys/serial
+x509_extensions = usr_cert
+unique_subject = no
+policy= policy_any
+
+[ policy_any ]
+countryName = optional
+stateOrProvinceName = optional
+localityName = optional
+organizationName = optional
+organizationalUnitName = optional
+commonName = supplied
+name = optional
+emailAddress = optional
+
+[ req ]
+distinguished_name	= req_distinguished_name
+x509_extensions = v3_ca
+string_mask = nombstr
+default_md = sha1
+
+[ req_distinguished_name ]
+0.organizationName	= Organization Name (company)
+organizationalUnitName = Organizational Unit Name (department, division)
+emailAddress = Email Address
+emailAddress_max = 100
+localityName = Locality Name (city, district)
+stateOrProvinceName = State or Province Name (full name)
+countryName = Country Name (2 letter code)
+countryName_min = 2
+countryName_max = 2
+commonName = Common Name (hostname, IP, or your name)
+commonName_max	= 100
+0.organizationName_default = My Company
+localityName_default = My Town
+stateOrProvinceName_default	= State or Providence
+countryName_default = US
+
+[ usr_cert ]
+basicConstraints=CA:FALSE
+nsComment = "Easy-RSA Generated Certificate"
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer:always
+extendedKeyUsage=clientAuth
+keyUsage = digitalSignature
+
+[ server ]
+basicConstraints=CA:FALSE
+nsCertType = server
+nsComment = "Easy-RSA Generated Server Certificate"
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer:always
+extendedKeyUsage=serverAuth
+keyUsage = digitalSignature, keyEncipherment
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer:always
+basicConstraints = CA:true
+
+[ crl_ext ]
+authorityKeyIdentifier=keyid:always,issuer:always

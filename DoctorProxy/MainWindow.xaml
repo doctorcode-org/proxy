@@ -1,0 +1,346 @@
+﻿<ctl:BaseWindow x:Class="DoctorProxy.MainWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctl="clr-namespace:DoctorProxy.Control"
+        xmlns:local="clr-namespace:DoctorProxy.Converters"
+        Title="DoctorProxy" 
+        Height="620" 
+        Width="900" 
+        Icon="pack://application:,,,/Resources/icon.ico" 
+        WindowStartupLocation="CenterScreen" Style="{StaticResource baseWindowStyle}">
+
+    <ContentControl>
+        <DockPanel Background="#f5f5f5" FlowDirection="RightToLeft">
+            <Border Width="220" Padding="0,0,5,0" BorderThickness="0,0,1,0">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStopCollection>
+                            <GradientStop Color="#f5f5f5" Offset="0"/>
+                            <GradientStop Color="#FFB1B1B6" Offset="0.5"/>
+                            <GradientStop Color="#f5f5f5" Offset="1"/>
+                        </GradientStopCollection>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <DockPanel Name="RightPanel">
+                    <DockPanel DockPanel.Dock="Top" Height="85"></DockPanel>
+
+                    <ctl:LinkButton x:Name="btnStatus" Caption="{DynamicResource Status}" 
+                                        Style="{StaticResource LinkButton}"
+                                        Selected="True"
+                                        Icon="pack://application:,,,/Resources/status0.png"
+                                        HoverIcon="pack://application:,,,/Resources/status.png"
+                                        Click="MainLinkButton_Click" />
+
+                    <ctl:LinkButton x:Name="btnAccunting" Caption="{DynamicResource UsersManager}" 
+                                        Style="{StaticResource LinkButton}"
+                                        Icon="pack://application:,,,/Resources/male0.png"
+                                        HoverIcon="pack://application:,,,/Resources/male.png"
+                                        Click="MainLinkButton_Click" />
+
+                    <ctl:LinkButton x:Name="btnSettings" Caption="{DynamicResource Settings}" 
+                                        Style="{StaticResource LinkButton}"
+                                        Icon="pack://application:,,,/Resources/setting0.png"
+                                        HoverIcon="pack://application:,,,/Resources/setting.png"
+                                        Click="MainLinkButton_Click" />
+
+                    <ctl:LinkButton x:Name="btnTasks" Caption="{DynamicResource Tasks}" 
+                                        Style="{StaticResource LinkButton}"
+                                        Icon="pack://application:,,,/Resources/tasks0.png"
+                                        HoverIcon="pack://application:,,,/Resources/tasks.png"
+                                        Click="MainLinkButton_Click" />
+
+                    <ctl:LinkButton x:Name="btnRadiusServer" Caption="{DynamicResource Logs}" 
+                                        Style="{StaticResource LinkButton}"
+                                        Icon="pack://application:,,,/Resources/radius0.png"
+                                        HoverIcon="pack://application:,,,/Resources/radius.png"
+                                        Click="MainLinkButton_Click" />
+
+                    <ctl:LinkButton x:Name="btnHelp" Caption="{DynamicResource Support}"
+                                        Style="{StaticResource LinkButton}"
+                                        Icon="pack://application:,,,/Resources/help0.png"
+                                        HoverIcon="pack://application:,,,/Resources/help.png"
+                                        Click="MainLinkButton_Click" />
+                </DockPanel>
+            </Border>
+
+            <Grid>
+                <ctl:SlideView x:Name="SettingsView" Style="{StaticResource SlideViewStyle}" Selected="{Binding ElementName=btnSettings, Path=Selected}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <DockPanel Grid.Column="0" LastChildFill="True">
+                                <GroupBox DockPanel.Dock="Top" Header="{DynamicResource ProxyService}" Padding="10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="5"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{DynamicResource Service}"></Label>
+                                            <Label Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{DynamicResource Port}"></Label>
+                                        </Grid>
+
+                                        <ctl:ServiceSelector x:Name="httpSelector" Grid.Row="1" LabelWidth="80" LabelText="Http(s)" Value="{Binding HttpProxyPort,Mode=TwoWay}" Checked="{Binding HttpProxy,Mode=TwoWay}" Template="{StaticResource tmpServiceSelector}"/>
+                                        <ctl:ServiceSelector Grid.Row="2" LabelWidth="80" Checked="{Binding SslProxy,Mode=TwoWay}" Value="{Binding SslProxyPort,Mode=TwoWay}" IsEnabled="{Binding ElementName=httpSelector, Path=Checked}" LabelText="SSL Proxy" Template="{StaticResource tmpServiceSelector}"/>
+                                        <ctl:ServiceSelector Grid.Row="3" LabelWidth="80" Checked="{Binding TunnelPlus,Mode=TwoWay}" Value="{Binding TunnelPlusPort,Mode=TwoWay}" IsEnabled="{Binding ElementName=httpSelector, Path=Checked}" LabelText="Tunel+" Template="{StaticResource tmpServiceSelector}"/>
+
+                                        <ctl:ServiceSelector x:Name="socksSelector" LabelWidth="80" Grid.Row="4" LabelText="Socks5" Value="{Binding SocksProxyPort,Mode=TwoWay}" Checked="{Binding SocksProxy,Mode=TwoWay}" Template="{StaticResource tmpServiceSelector}"/>
+                                        <ctl:ServiceSelector Grid.Row="5" LabelWidth="80" Checked="{Binding pSocks,Mode=TwoWay}" Value="{Binding pSocksPort,Mode=TwoWay}" IsEnabled="{Binding ElementName=socksSelector, Path=Checked}" LabelText="pSocks" Template="{StaticResource tmpServiceSelector}"/>
+                                        <ctl:ServiceSelector Grid.Row="6" LabelWidth="80" Checked="{Binding tSocks,Mode=TwoWay}" Value="{Binding tSocksPort,Mode=TwoWay}" IsEnabled="{Binding ElementName=socksSelector, Path=Checked}" LabelText="tSocks" Template="{StaticResource tmpServiceSelector}"/>
+
+                                        <ctl:ServiceSelector Grid.Row="7" LabelWidth="80" Checked="{Binding FtpProxy,Mode=TwoWay}" Value="{Binding FtpProxyPort,Mode=TwoWay}" LabelText="FTP" Template="{StaticResource tmpServiceSelector}"/>
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox Name="grpServiceManager" Header="{DynamicResource ServiceManager}" Padding="10" Margin="0 10 0 0">
+                                    <StackPanel>
+                                        <Button Name="btnInstallService" Style="{StaticResource btnServiceStyle}" IsEnabled="{Binding Installed, Converter={StaticResource InvertBoolean}}" Click="btnInstallService_Click" Content="{DynamicResource InstallService}"></Button>
+                                        <Button Name="btnUnistallService" Style="{StaticResource btnServiceStyle}" IsEnabled="{Binding Installed}" Click="btnUnistallService_Click" Content="{DynamicResource UnistallService}"></Button>
+                                        <Button Name="btnRunService" Style="{StaticResource btnServiceStyle}" Click="btnRunService_Click" Content="{DynamicResource RunService}">
+                                            <Button.IsEnabled>
+                                                <MultiBinding Converter="{StaticResource AndConditional}">
+                                                    <Binding Path="DataContext.Installed" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=GroupBox}" />
+                                                    <Binding Path="DataContext.IsRunning" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=GroupBox}" Converter="{StaticResource InvertBoolean}" />
+                                                </MultiBinding>
+                                            </Button.IsEnabled>
+                                        </Button>
+                                        <Button Name="btnStopService" Style="{StaticResource btnServiceStyle}" IsEnabled="{Binding IsRunning}" Click="btnStopService_Click" Content="{DynamicResource StopService}"></Button>
+                                    </StackPanel>
+                                </GroupBox>
+                            </DockPanel>
+
+                            <DockPanel Grid.Column="2" LastChildFill="True">
+                                <GroupBox DockPanel.Dock="Top" Header=" OpenVPN " Padding="10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0" Width="auto" Margin="3 5" FontSize="12">IP سرور یا دامنه</Label>
+
+                                        <ctl:ServiceSelector x:Name="openVpnSelector" Grid.Row="1" LabelText="OpenVPN" 
+                                                                 Value="{Binding ServerName,Mode=TwoWay}"   
+                                                                 NumericTextBox="False"
+                                                                 Checked="{Binding OpenVPN,Mode=TwoWay}" LabelWidth="80" MaxLength="100" 
+                                                                 Template="{StaticResource tmpServiceSelector}"/>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="110"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ctl:ServiceSelector Grid.Row="0" Grid.Column="2" LabelWidth="80" Value="{Binding OpenVpnTcpPort,Mode=TwoWay}" Checked="{Binding OpenVpnTcp,Mode=TwoWay}" IsEnabled="{Binding ElementName=openVpnSelector, Path=Checked}" LabelText="TCP Port" Template="{StaticResource tmpServiceSelector}"/>
+                                            <ctl:ServiceSelector Grid.Row="0" Grid.Column="0" LabelWidth="80" Value="{Binding OpenVpnUdpPort,Mode=TwoWay}" Checked="{Binding OpenVpnUdp,Mode=TwoWay}" IsEnabled="{Binding ElementName=openVpnSelector, Path=Checked}" LabelText="UDP Port" Template="{StaticResource tmpServiceSelector}"/>
+
+                                            <ctl:ServiceSelector Grid.Row="1" Grid.Column="2" LabelWidth="80" Value="{Binding SslVpnPort,Mode=TwoWay}" Checked="{Binding SslVpn,Mode=TwoWay}" IsEnabled="{Binding ElementName=openVpnSelector, Path=Checked}" LabelText="sslVPN" Template="{StaticResource tmpServiceSelector}"/>
+                                            <ctl:ServiceSelector Grid.Row="1" Grid.Column="0" LabelWidth="80" Value="{Binding VpnPlusPort,Mode=TwoWay}" Checked="{Binding VpnPlus,Mode=TwoWay}" IsEnabled="{Binding ElementName=openVpnSelector, Path=Checked}" LabelText="VPN+" Template="{StaticResource tmpServiceSelector}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="3" Margin="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Button Name="btnMakeCert" Grid.Column="2" Style="{StaticResource MetroButton}" FontSize="13" Content="صدور گواهی SSL" Click="btnMakeCert_Click"></Button>
+                                            <Button Name="btnGetClientSetting" Grid.Column="0" Style="{StaticResource MetroButton}" FontSize="13" Content="دریافت تنظیمات کلاینت"></Button>
+                                        </Grid>
+
+
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox DockPanel.Dock="Top" Header=" Radius سرور داخلی " Padding="10" Margin="0 10 0 0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0" Margin="3,0,3,3" FontSize="12">IP سرور یا دامنه</Label>
+
+                                        <ctl:ServiceSelector Grid.Row="1" LabelText="فعالسازی" NumericTextBox="False" 
+                                                                 Value="{Binding InternalRadiusServerUrl,Mode=TwoWay}" 
+                                                                 Checked="{Binding EnableInternalRadiusServer,Mode=TwoWay}" 
+                                                                 LabelWidth="80" MaxLength="100"
+                                                                 Template="{StaticResource tmpServiceSelector}"/>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="15"/>
+                                                <ColumnDefinition Width="158"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ctl:ServiceSelector Grid.Column="2" LabelWidth="80" 
+                                                                     Value="{Binding InternalRadiusServerPort,Mode=TwoWay,Converter={StaticResource NullableValue}}" 
+                                                                     Checked="{Binding EnableInternalRadiusServer}" 
+                                                                     LabelText="پورت سرور:" Template="{StaticResource tmpLabeledInput}"/>
+
+                                            <ctl:ServiceSelector Grid.Column="0" LabelWidth="80" NumericTextBox="False"
+                                                                     Value="{Binding InternalRadiusServerSharedSecret,Mode=TwoWay,Converter={StaticResource NullableValue}}" 
+                                                                     Checked="{Binding EnableInternalRadiusServer}" 
+                                                                     LabelText="رمز مشترک:" Template="{StaticResource tmpLabeledInput}"/>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox Header=" Radius سرور خارجی " Padding="10" Margin="0 10 0 0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0" Margin="3,0,3,3" FontSize="12">IP سرور یا دامنه</Label>
+
+                                        <ctl:ServiceSelector Grid.Row="1" LabelText="فعالسازی" 
+                                                                 Value="{Binding ExternalRadiusServerUrl,Mode=TwoWay}" 
+                                                                 Checked="{Binding EnableExternalRadiusServer,Mode=TwoWay}" 
+                                                                 LabelWidth="80" MaxLength="100" NumericTextBox="False"
+                                                                 Template="{StaticResource tmpServiceSelector}"/>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="15"/>
+                                                <ColumnDefinition Width="158"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ctl:ServiceSelector Grid.Column="2" LabelWidth="80" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" 
+                                                                 Checked="{Binding EnableExternalRadiusServer}" 
+                                                                 LabelText="پورت سرور:" Template="{StaticResource tmpLabeledInput}"/>
+
+                                            <ctl:ServiceSelector Grid.Column="0" LabelWidth="80" Value="{Binding ExternalRadiusServerSharedSecret,Mode=TwoWay}" 
+                                                                 Checked="{Binding EnableExternalRadiusServer}" 
+                                                                 LabelText="رمز مشترک:" Template="{StaticResource tmpLabeledInput}"/>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </DockPanel>
+
+                        </Grid>
+
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="180"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="1" x:Name="btnSaveSettings" 
+                                    Click="btnSaveSettings_Click" Width="150" Height="35" Padding="5" Style="{StaticResource MetroButton}" Content="{DynamicResource SaveChanges}"></Button>
+
+
+                        </Grid>
+
+                    </Grid>
+                </ctl:SlideView>
+
+                <ctl:SlideView x:Name="view4" Style="{StaticResource SlideViewStyle}" VerticalAlignment="Stretch" Selected="{Binding ElementName=btnAccunting, Path=Selected}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Border Padding="25"></Border>
+                        </Grid>
+
+                        <Grid Grid.Row="1" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="130"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DataGrid Name="grdUsers" Grid.Column="0" HorizontalAlignment="Stretch" CanUserReorderColumns="False" CanUserResizeColumns="False" AutoGenerateColumns="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="نام کاربری" CanUserReorder="False" CanUserResize="False"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="تعداد ورود همزمان"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="تاریخ ثبت"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="تاریخ شروع"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="اعتبار (روز)"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Border Grid.Column="1" Padding="10">
+                                <StackPanel>
+                                    <Button Name="btnNewUser" Style="{StaticResource CommandButton}" Click="btnNewUser_Click">جدید</Button>
+                                    <Button Style="{StaticResource btnAccunting}">ویرایش</Button>
+                                    <Button Style="{StaticResource btnAccunting}">حذف</Button>
+                                    <Button Style="{StaticResource btnAccunting}">تاریخچه</Button>
+                                    <Button Style="{StaticResource btnAccunting}">افزایش اعتبار</Button>
+                                    <Button Style="{StaticResource CommandButton}">حذف همه</Button>
+                                    <Button Style="{StaticResource CommandButton}">ورود لیست</Button>
+                                    <Button Style="{StaticResource CommandButton}">استخراج لیست</Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Grid Grid.Row="2" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="90"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Label>کل کاربران:</Label>
+                                <Label Margin="0,0,20,0" ContentStringFormat="{}{0:0,0}" Content="2500"></Label>
+                                <Label>کاربران منقضی:</Label>
+                                <Label Margin="0,0,20,0">150</Label>
+                                <Label>برچسب:</Label>
+                            </StackPanel>
+
+
+                        </Grid>
+                    </Grid>
+                </ctl:SlideView>
+
+                <ctl:SlideView x:Name="view5" Style="{StaticResource SlideViewStyle}" Selected="{Binding ElementName=btnStatus, Path=Selected}">
+                    <Grid>
+                        <Label>تست 10</Label>
+                    </Grid>
+                </ctl:SlideView>
+            </Grid>
+        </DockPanel>
+    </ContentControl>
+
+</ctl:BaseWindow> 

@@ -1,0 +1,47 @@
+﻿<ctl:BaseWindow x:Class="DoctorProxy.WinNewUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctl="clr-namespace:DoctorProxy.Control"
+        Style="{StaticResource baseWindowStyle}"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Title="WinNewUser" 
+        Width="500" 
+        SizeToContent="Height">
+
+  
+    <Grid FlowDirection="RightToLeft">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="55"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" FlowDirection="RightToLeft" Margin="5,10,10,0">
+            <ctl:ServiceSelector Style="{StaticResource RtlServiceSelector}" LabelText="نام کاربری:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+            <ctl:ServiceSelector NumericTextBox="True" Style="{StaticResource RtlServiceSelector}" LabelText="اعتبار (روز):" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+            <ctl:ServiceSelector NumericTextBox="True" Style="{StaticResource RtlServiceSelector}" LabelText="موبایل:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" FlowDirection="RightToLeft" Margin="5,10,10,0">
+            <ctl:ServiceSelector Style="{StaticResource RtlServiceSelector}" LabelText="رمز عبور:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+            <ctl:ServiceSelector NumericTextBox="True" Style="{StaticResource RtlServiceSelector}" LabelText="ورود همزمان:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource RtlServiceSelector}" LabelText="تاریخ شروع:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />                    
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" FlowDirection="RightToLeft" Margin="5,0,10,0">
+            <ctl:ServiceSelector Style="{StaticResource RtlServiceSelector}" LabelText="ایمیل:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+            <ctl:ServiceSelector Style="{StaticResource RtlServiceSelector}" LabelText="توضیحات:" Value="{Binding ExternalRadiusServerPort,Mode=TwoWay}" />
+        </StackPanel>
+        
+        <Button Grid.Row="2" Grid.ColumnSpan="3" Width="100" Height="28" Padding="3" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource CommandButton}">تایید</Button>
+    </Grid>
+    
+    
+</ctl:BaseWindow>

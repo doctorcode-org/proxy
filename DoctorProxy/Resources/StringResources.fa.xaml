@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="Status">وضعیت کلی</sys:String>
+    <sys:String x:Key="RadiusServer">Radius سرور</sys:String>
+    <sys:String x:Key="InternalRadiusServer">Radius سرور داخلی</sys:String>
+    <sys:String x:Key="ExternalRadiusServer">Radius سرور خارجی</sys:String>
+    <sys:String x:Key="UsersManager">مدیریت کاربران</sys:String>
+    <sys:String x:Key="Settings">پیکربندی</sys:String>
+    <sys:String x:Key="Logs">رخدادها</sys:String>
+    <sys:String x:Key="Tasks">کارتابل</sys:String>
+    <sys:String x:Key="Support">پشتیبانی</sys:String>
+    <sys:String x:Key="ProxyService">سرویس پراکسی </sys:String>
+    <sys:String x:Key="Service">سرویس</sys:String>
+    <sys:String x:Key="Port">پورت</sys:String>
+    <sys:String x:Key="ServiceManager">مدیریت سرویس</sys:String>
+    <sys:String x:Key="InstallService">نصب سرویس</sys:String>
+    <sys:String x:Key="UnistallService">حذف سرویس</sys:String>
+    <sys:String x:Key="RunService">اجرای سرویس</sys:String>
+    <sys:String x:Key="StopService">توقف سرویس</sys:String>
+    <sys:String x:Key="SaveChanges">ذخیره تغییرات</sys:String>
+    <sys:String x:Key="MakeCertNote">برای تولید یک گواهی جدید، اطلاعات لازم را وارد کنید. پس از تولید گواهی باید دوباره تنظیمات کلاینت را دریافت و به کلاینت منتقل کنید.
+    وارد کردن CN الزامیست.
+    </sys:String>
+</ResourceDictionary>
